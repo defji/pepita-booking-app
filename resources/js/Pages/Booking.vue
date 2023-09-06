@@ -1,6 +1,6 @@
 <script>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import {Head} from '@inertiajs/vue3';
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
@@ -15,8 +15,15 @@ export default {
     data() {
         return {
             calendarOptions: {
-                plugins: [ dayGridPlugin, interactionPlugin ],
-                initialView: 'dayGridMonth'
+                plugins: [dayGridPlugin, interactionPlugin],
+                initialView: 'dayGridMonth',
+                events: [{
+                    'title': 'jujj nap',
+                    'start': '2023-09-06 23:00:00',
+                    'end': '2023-09-06 23:55:00',
+
+                }
+                ]
             }
         }
     }
@@ -25,7 +32,7 @@ export default {
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Dashboard"/>
 
     <AuthenticatedLayout>
         <template #header>
@@ -34,7 +41,7 @@ export default {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <FullCalendar :options="calendarOptions" />
+                <FullCalendar :options="calendarOptions"/>
             </div>
         </div>
     </AuthenticatedLayout>
