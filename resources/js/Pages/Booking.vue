@@ -5,6 +5,7 @@ import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import axios from 'axios'
 
 export default {
     components: {
@@ -16,32 +17,68 @@ export default {
     data() {
         return {
             calendarOptions: {
+                timeZone: 'Europe/Budapest',
                 plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
                 initialView: 'timeGridWeek',
                 //dateClick: this.handleDateClick,
                 selectable: true,
                 select: this.handleDateSelect,
+                businessHours: {
+                    daysOfWeek: [1, 2, 3, 4, 5], // Monday - Thursday
 
+                    startTime: '08:00',
+                    endTime: '16:00',
+                },
                 headerToolbar: {
                     left: 'prev,next',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay' // user can switch between the two
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
-                events: [{
-                    'title': 'jujj nap',
-                    'start': '2023-09-06 23:00:00',
-                    'end': '2023-09-06 23:55:00',
-
-                }
-                ]
+                events: null
             }
         }
     },
     methods: {
         handleDateSelect(info) {
-            alert(JSON.stringify((info)));
+
+            this.$swal({
+                title: 'Please enter the  event title or partner name',
+                input: 'text',
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'OK',
+                showLoaderOnConfirm: true,
+                preConfirm: (title) => {
+                    let eventData = {
+                        title: title,
+                        start: info.start,
+                        end: info.end,
+                        allDay: info.allDay
+                    }
+                    axios.post('/event', eventData).then((result) => {
+                        this.fetchEvents()
+                        this.fetchEvents()
+                    }).catch(error => {
+
+                    });
+                },
+            }).then((result) => {
+                this.fetchEvents();
+            });
+
+        },
+        fetchEvents() {
+            axios.get('/event').then(result => {
+                this.calendarOptions.events = result.data;
+            });
         }
+    },
+    mounted() {
+        this.fetchEvents();
     }
+
 }
 
 </script>

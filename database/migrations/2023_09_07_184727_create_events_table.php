@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->timestamp('start');
             $table->timestamp('end');
             $table->string('title');
+            $table->boolean('all_day')->default(false);
             $table->timestamps();
         });
     }

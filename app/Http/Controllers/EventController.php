@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddEventRequest;
 use App\Models\Event;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -12,54 +15,26 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        return Event::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AddEventRequest $request)
     {
-        //
+        try {
+            Event::create([
+                'title'   => $request->title,
+                'start'   => Carbon::parse($request->start),
+                'end'     => Carbon::parse($request->end),
+                'all_day' => $request->allDay,
+            ]);
+            return response('OK', 201);
+        } catch (Exception $e) {
+            return response($e->getMessage(), 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Event $event)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Event $event)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Event $event)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Event $event)
-    {
-        //
-    }
 }
