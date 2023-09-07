@@ -17,6 +17,7 @@ export default {
             calendarOptions: {
                 plugins: [dayGridPlugin, interactionPlugin],
                 initialView: 'dayGridMonth',
+                dateClick: this.handleDateClick,
                 events: [{
                     'title': 'jujj nap',
                     'start': '2023-09-06 23:00:00',
@@ -25,6 +26,11 @@ export default {
                 }
                 ]
             }
+        }
+    },
+    methods: {
+        handleDateClick: function (arg) {
+            alert('date click! ' + arg.dateStr)
         }
     }
 }
