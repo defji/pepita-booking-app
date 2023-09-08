@@ -29,10 +29,11 @@ php artisan serve
 
 ## Usage
 
+- open http://127.0.0.1:8000 in your browser
 - Login with admin@demo.co with password: admin123
 - Check fullcalendar features
 - Check pre-seeded events about specified rules
-- Add an event, with select a time range
+- Add an event, select a time range
 - Try to add overlapped event
 - Try to add event outside business hors/days
 - Enjoy! 😎
