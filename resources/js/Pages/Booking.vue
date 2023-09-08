@@ -14,20 +14,23 @@ export default {
         Head
 
     },
+    props: ['business_time'],
     data() {
         return {
             calendarOptions: {
                 timeZone: 'Europe/Budapest',
+                hour12: false,
                 plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
                 initialView: 'timeGridWeek',
                 //dateClick: this.handleDateClick,
                 selectable: true,
+                firstDay: 1,
+                timeFormat: 'H(:mm)',
                 select: this.handleDateSelect,
                 businessHours: {
-                    daysOfWeek: [1, 2, 3, 4, 5], // Monday - Thursday
-
-                    startTime: '08:00',
-                    endTime: '16:00',
+                    daysOfWeek: this.business_time.days, // Monday - Thursday
+                    startTime: this.business_time.hours[0].toString().padStart(2, '0') + ':00',
+                    endTime: this.business_time.hours[1].toString().padStart(2, '0') + ':00',
                 },
                 headerToolbar: {
                     left: 'prev,next',
@@ -58,10 +61,21 @@ export default {
                         allDay: info.allDay
                     }
                     axios.post('/event', eventData).then((result) => {
-                        this.fetchEvents()
-                        this.fetchEvents()
+                        this.$swal({
+                            icon: 'success',
+                            title: 'Event successfully added.',
+                            confirmButtonText: 'OK',
+                            preConfirm: () => {
+                                this.fetchEvents()
+                            }
+                        })
                     }).catch(error => {
-
+                        console.log(error);
+                        this.$swal({
+                            title: error.response.data.message,
+                            icon: 'error',
+                            confirmButtonText: 'OK',
+                        });
                     });
                 },
             }).then((result) => {
@@ -84,13 +98,12 @@ export default {
 </script>
 
 <template>
-    <Head title="Dashboard"/>
+    <Head title="Booking"/>
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Booking</h2>
         </template>
-
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <FullCalendar :options="calendarOptions"/>

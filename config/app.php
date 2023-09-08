@@ -16,7 +16,16 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name'          => env('APP_NAME', 'Laravel'),
+
+
+    /*
+     *  Business time for booking events
+     */
+    'business_time' => [
+        'days'  => (array)explode(",", env('BUSINESS_DAYS', "1,2,3,4,5")),
+        'hours' => (array)explode(",", env('BUSINESS_HOURS', "8,16")),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +51,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------

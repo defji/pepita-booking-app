@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\OutsideBusinessTime;
+use App\Rules\ValidPeriod;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AddEventRequest extends FormRequest
@@ -22,9 +24,19 @@ class AddEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'string|required',
-            'start' => 'required',
-            'end'   => 'required',
+            'title' => 'required',
+            'start' => [
+                'required',
+                'before:end',
+                new OutsideBusinessTime(),
+            ],
+            'end'   => [
+                'required',
+                'after:start',
+                new ValidPeriod(),
+                new OutsideBusinessTime(),
+            ],
         ];
+
     }
 }

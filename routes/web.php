@@ -31,7 +31,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/booking', function () {
-    return Inertia::render('Booking');
+    return Inertia::render('Booking', ['business_time' => config('app.business_time')]);
 })->middleware(['auth', 'verified'])->name('booking');
 
 Route::resource('/event', EventController::class)
