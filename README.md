@@ -1,4 +1,4 @@
-## Trial application for pepita group
+# Trial application for pepita group
 
 The task was to create an event booking application with Laravel and Fullcalendar
 
