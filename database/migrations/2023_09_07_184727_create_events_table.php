@@ -12,9 +12,10 @@ return new class extends Migration {
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('start');
-            $table->timestamp('end');
+            $table->timestamp('start')->nullable();
+            $table->timestamp('end')->nullable();
             $table->string('title');
+            $table->string('rrule')->nullable();
             $table->boolean('all_day')->default(false);
             $table->timestamps();
         });

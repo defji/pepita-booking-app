@@ -4,6 +4,7 @@ import {Head} from '@inertiajs/vue3';
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
+import rrulePlugin from '@fullcalendar/rrule'
 import interactionPlugin from '@fullcalendar/interaction'
 import axios from 'axios'
 
@@ -20,7 +21,7 @@ export default {
             calendarOptions: {
                 timeZone: 'Europe/Budapest',
                 hour12: false,
-                plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin],
+                plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin, rrulePlugin],
                 initialView: 'timeGridWeek',
                 //dateClick: this.handleDateClick,
                 selectable: true,
